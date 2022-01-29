@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import strings from './swapit.controller.strings';
+import strings from './swapi.controller.strings';
 const baseUrl = strings.baseUrl;
 
 const getPeople: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -21,6 +21,9 @@ const getPeople: RequestHandler = async (req: Request, res: Response, next: Next
 
 const getPerson: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const url = req.query.url;
+    if (!url) {
+        return res.status(200).send({ 'error': 'Must include URL query parameter' });
+    }
     await axios.get(`${url}`)
         .then((response) => {
             return res.status(200).send({ 'results': response.data });
