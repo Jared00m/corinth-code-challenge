@@ -1,0 +1,22 @@
+{
+  "name": "corinth-code-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jared00m/Corinth-Code-Challenge.git"
+  },
+  "author": "Jared Mitcham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jared00m/Corinth-Code-Challenge/issues"
+  },
+  "homepage": "https://github.com/Jared00m/Corinth-Code-Challenge#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
