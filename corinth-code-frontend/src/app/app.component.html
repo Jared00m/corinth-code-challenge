@@ -1,3 +1,18 @@
-<app-nav-bar (characterSelected)="onDisplayCharacter($event)"></app-nav-bar>
-<h1>App Component</h1>
-<p *ngIf="character !== ''">The character is {{ character }}</p>
+<app-nav-bar (characterSelected)="onCharacterSelected($event)"></app-nav-bar>
+<app-profile *ngIf="character.name !== ''" [character]="character"></app-profile>
+<div class="container mt-5">
+  <h3 *ngIf="notFound">No character found by that name. Please try again.</h3>
+  <div *ngIf="results.length > 1">
+    <h3 *ngIf="results.length > 1">Please select one of the characters below</h3>
+    <ul>
+      <li
+        *ngFor="let character of results"
+        (click)="onClickCharacter(character)"
+        class="character-list color-primary">
+        {{ character.name }}
+      </li>
+    </ul>
+  </div>
+
+</div>
+

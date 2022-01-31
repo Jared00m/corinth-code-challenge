@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { SwapiPeopleResponse } from 'src/app/models/swapi/swapi-people-response';
+import { SwapiPerson } from 'src/app/models/swapi/swapi-person';
 import { SwapiService } from 'src/app/services/swapi/swapi.service';
 
 @Component({
@@ -9,21 +11,21 @@ import { SwapiService } from 'src/app/services/swapi/swapi.service';
 export class NavBarComponent implements OnInit {
 
   query = '';
-  @Output() characterSelected = new EventEmitter<string>();
+  @Output() characterSelected = new EventEmitter<SwapiPerson[]>();
 
   constructor(private swapiService: SwapiService) { }
 
   ngOnInit(): void {
-  }
-
-  onInput() {
-    console.log(this.query);
+    this.resetSearch();
   }
 
   async onSubmit() {
-    console.log('Selected character is ' + this.query);
-    this.characterSelected.emit(this.query);
-    const response = await this.swapiService.searchSwapi(this.query);
-    console.log(response);
+    const response: SwapiPerson[] = await this.swapiService.search(this.query);
+    this.characterSelected.emit(response);
+    this.resetSearch();
+  }
+
+  resetSearch() {
+    this.query = '';
   }
 }

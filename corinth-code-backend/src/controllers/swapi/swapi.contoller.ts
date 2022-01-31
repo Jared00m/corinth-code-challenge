@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NextFunction, Request, RequestHandler, Response } from "express";
+import { SwapiPerson } from "../../types/swapi/swapi-person";
 import strings from './swapi.controller.strings';
 const baseUrl = strings.baseUrl;
 
@@ -9,14 +10,28 @@ const getPeople: RequestHandler = async (req: Request, res: Response, next: Next
     if (search) {
         uri = uri + `?search=${search}`;
     }
-   
-    await axios.get(uri)
+
+    let people: SwapiPerson[] = [];
+    let isMore = true;
+
+    while (isMore === true) {
+        await axios.get(uri)
         .then((response) => {
-            return res.status(200).send({'results': response.data });
+            console.log(uri);
+            people.push(...response.data.results);
+            if (response.data.next) {
+                isMore = true;
+                uri = response.data.next;
+            } else {
+                isMore = false;
+            }
         })
         .catch((error) => {
-            return res.status(200).send({ 'error': error.message });
+            isMore = false;
+            return res.status(200).send({ error: error.message });
         });
+    }
+    return res.status(200).send(people);
 }
 
 const getPerson: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -26,11 +41,56 @@ const getPerson: RequestHandler = async (req: Request, res: Response, next: Next
     }
     await axios.get(`${url}`)
         .then((response) => {
-            return res.status(200).send({ 'results': response.data });
+            return res.status(200).send(response.data);
         })
         .catch((error) => {
-            return res.status(200).send({ 'error': error.message });
+            return res.status(200).send({ error: error.message });
         })
 }
 
-export { getPeople, getPerson };
+const getFilm: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    let url = req.query.url;
+    if(!url) {
+        return res.status(200).send({ 'error': 'Must include URL query parameter' });
+    }
+    await axios.get(`${url}`)
+        .then((response) => {
+            return res.status(200).send(response.data);
+        })
+        .catch((error) => {
+            return res.status(200).send({ error: error.message });
+        })
+
+}
+
+const getStarship: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    let url = req.query.url;
+    if(!url) {
+        return res.status(200).send({ 'error': 'Must include URL query parameter' });
+    }
+    await axios.get(`${url}`)
+        .then((response) => {
+            return res.status(200).send(response.data);
+        })
+        .catch((error) => {
+            return res.status(200).send({ error: error.message });
+        })
+
+}
+
+const getHomeworld: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    let url = req.query.url;
+    if(!url) {
+        return res.status(200).send({ 'error': 'Must include URL query parameter' });
+    }
+    await axios.get(`${url}`)
+        .then((response) => {
+            return res.status(200).send(response.data);
+        })
+        .catch((error) => {
+            return res.status(200).send({ error: error.message });
+        })
+
+}
+
+export { getPeople, getPerson, getFilm, getStarship, getHomeworld };

@@ -9,8 +9,23 @@ export class SwapiService {
 
   constructor(private api: ApiService) { }
 
-  async searchSwapi(name: string)  {
+  async search(name: string)  {
     const response = await this.api.get(`${strings.apiRoutes.people}?search=${name}`);
+    return response;
+  }
+
+  async getFilm(url: string) {
+    const response = await this.api.get(`${strings.apiRoutes.films}?url=${url}`)
+    return response;
+  }
+
+  async getStarship(url: string) {
+    const response = await this.api.get(`${strings.apiRoutes.starships}?url=${url}`);
+    return response;
+  }
+
+  async getHomeworld(url: string) {
+    const response = await this.api.get(`${strings.apiRoutes.homeworld}?url=${url}`);
     return response;
   }
 }
