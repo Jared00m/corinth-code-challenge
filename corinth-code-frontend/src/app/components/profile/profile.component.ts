@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SwapiService } from 'src/app/services/swapi/swapi.service';
 import { SwapiPerson } from 'src/app/models/swapi/swapi-person';
 import { SwapiHomeworld } from 'src/app/models/swapi/swapi-homeworld';
-import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { SwapiFilms } from 'src/app/models/swapi/swapi-films';
 import { SwapiStarship } from 'src/app/models/swapi/swapit-starships';
 
@@ -57,13 +56,10 @@ export class ProfileComponent implements OnInit {
 
   constructor(private swapiService: SwapiService) { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   async ngOnChanges() {
     this.loading = true;
-    console.log(this.character);
     await this.getFilms();
     await this.getStarships();
     await this.getHomeworld();
@@ -76,7 +72,6 @@ export class ProfileComponent implements OnInit {
       const response = await this.swapiService.getFilm(url);
       this.films.push(response);
     }
-    console.log(this.films);
   }
 
   async getStarships() {
@@ -85,12 +80,9 @@ export class ProfileComponent implements OnInit {
       const response = await this.swapiService.getStarship(url);
       this.starships.push(response);
     }
-    console.log(this.starships);
   }
 
   async getHomeworld() {
     this.homeworld = await this.swapiService.getHomeworld(this.character.homeworld);
-    console.log(this.homeworld);
   }
-
 }
