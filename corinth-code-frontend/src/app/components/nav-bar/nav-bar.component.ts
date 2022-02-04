@@ -14,6 +14,7 @@ import { interval, Observable, Subject } from 'rxjs';
 export class NavBarComponent implements OnInit {
 
   query: string = '';
+  searching = false;
   searchResults: SwapiPeopleResponse = {
     results: [],
     query: ''
@@ -25,19 +26,24 @@ export class NavBarComponent implements OnInit {
   constructor(private swapiService: SwapiService) {}
 
   ngOnInit(): void {
-    this.subjectSearchInput.pipe((debounceTime(1000))).subscribe(async (name) => {
+    this.subjectSearchInput.pipe((debounceTime(500))).subscribe(async (name) => {
+      this.searching = true;
       const response: SwapiPeopleResponse = await this.swapiService.search(name)
       if (response.query === this.query) {
         this.characterList = response.results;
+        this.searching = false;
       }
+      this.searching = false;
     })
   }
 
   onInput(name: string) {
     if (name !== '') {
+      this.searching = true;
       this.subjectSearchInput.next(name)
     } else {
       this.characterList = [];
+      this.searching = false;
     }
 
   }
