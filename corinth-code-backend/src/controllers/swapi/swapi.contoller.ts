@@ -31,7 +31,7 @@ const getPeople: RequestHandler = async (req: Request, res: Response, next: Next
             return res.status(200).send({ error: error.message });
         });
     }
-    return res.status(200).send(people);
+    return res.status(200).send({ results: people, query: search });
 }
 
 const getPerson: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
