@@ -17,8 +17,8 @@
     <div class="row">
       <div class="col-lg-12">
         <h1>About {{ character.name }}</h1>
-        <p>Hi, my name is {{ character.name }}. I was born in {{ character.birth_year}} and I'm from the planet
-          of {{ homeworld.name }}. </p>
+        <p>Hi, my name is {{ character.name }}. I was born in {{ character.birth_year === 'unknown' ? 'an unknown year' : character.birth_year }} and I'm from
+          {{ homeworld.name === 'unknown' ? 'an unknown planet' : 'the planet of ' + homeworld.name }}. </p>
         <ul>
           <li>Gender: {{ character.gender }}</li>
           <li>Height: {{ character.height }} cm</li>
