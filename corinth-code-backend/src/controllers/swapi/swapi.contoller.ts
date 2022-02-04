@@ -17,13 +17,13 @@ const getPeople: RequestHandler = async (req: Request, res: Response, next: Next
     while (isMore === true) {
         await axios.get(uri)
         .then((response) => {
-            console.log(uri);
             people.push(...response.data.results);
             if (response.data.next) {
                 isMore = true;
                 uri = response.data.next;
             } else {
                 isMore = false;
+                return res.status(200).send({ results: people, query: search });
             }
         })
         .catch((error) => {
@@ -31,7 +31,6 @@ const getPeople: RequestHandler = async (req: Request, res: Response, next: Next
             return res.status(200).send({ error: error.message });
         });
     }
-    return res.status(200).send({ results: people, query: search });
 }
 
 const getPerson: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {

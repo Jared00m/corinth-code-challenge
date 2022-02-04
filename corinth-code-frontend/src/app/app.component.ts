@@ -31,7 +31,6 @@ export class AppComponent {
   };
 
   onCharacterSelected(character: SwapiPerson) {
-    console.log(character);
     this.character = character;
     this.notFound = false;
   }
