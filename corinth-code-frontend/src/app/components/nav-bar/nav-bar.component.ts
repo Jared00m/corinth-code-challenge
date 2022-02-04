@@ -2,6 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SwapiPeopleResponse } from 'src/app/models/swapi/swapi-people-response';
 import { SwapiPerson } from 'src/app/models/swapi/swapi-person';
 import { SwapiService } from 'src/app/services/swapi/swapi.service';
+import { debounce, debounceTime } from 'rxjs/operators';
+import { interval, Observable, Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,22 +13,42 @@ import { SwapiService } from 'src/app/services/swapi/swapi.service';
 })
 export class NavBarComponent implements OnInit {
 
-  query = '';
-  @Output() characterSelected = new EventEmitter<SwapiPerson[]>();
+  query: string = '';
+  searchResults: SwapiPeopleResponse = {
+    results: [],
+    query: ''
+  };
+  characterList : SwapiPerson[] = [];
+  private subjectSearchInput: Subject<string> = new Subject();
+  @Output() characterSelected = new EventEmitter<SwapiPerson>();
 
-  constructor(private swapiService: SwapiService) { }
+  constructor(private swapiService: SwapiService) {}
 
   ngOnInit(): void {
-    this.resetSearch();
+    this.subjectSearchInput.pipe((debounceTime(1000))).subscribe(async (name) => {
+      const response: SwapiPeopleResponse = await this.swapiService.search(name)
+      if (response.query === this.query) {
+        this.characterList = response.results;
+      }
+    })
   }
 
-  async onSubmit() {
-    const response: SwapiPerson[] = await this.swapiService.search(this.query);
-    this.characterSelected.emit(response);
+  onInput(name: string) {
+    if (name !== '') {
+      this.subjectSearchInput.next(name)
+    } else {
+      this.characterList = [];
+    }
+
+  }
+
+  async onSubmit(character: SwapiPerson) {
+    this.characterSelected.emit(character);
     this.resetSearch();
   }
 
   resetSearch() {
     this.query = '';
+    this.characterList = [];
   }
 }
