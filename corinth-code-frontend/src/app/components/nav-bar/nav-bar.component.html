@@ -1,31 +1,33 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
+  <div class="container-fluid justify-content-between">
     <a class="navbar-brand">Star Wars Search</a>
-    <form class="d-flex col-md-4 col">
-      <div class="input-group">
-        <input
-        #searchInput
-        [(ngModel)]="query"
-        (input)="onInput(searchInput.value)"
-        [ngModelOptions]="{standalone: true}"
-        class="form-control"
-        type="search"
-        placeholder="Enter a character's name..."
-        aria-label="Search">
-        <!-- <div class="spinner-border" role="status">
+    <div class="search-container col-md-4 col float-end">
+      <input
+      #searchInput
+      [(ngModel)]="query"
+      (input)="onInput(searchInput.value)"
+      [ngModelOptions]="{standalone: true}"
+      class="form-control"
+      type="text"
+      placeholder="Enter a character's name..."
+      aria-label="Search">
+
+      <div *ngIf="searching" class="search-waiting">
+        <div class="spinner-border search-waiting" role="status">
           <span class="visually-hidden">Loading...</span>
-        </div> -->
-        <div *ngIf="characterList.length" class="searchList">
-          <div>
-            <ul>
-              <li
-                *ngFor="let character of characterList"
-                (click)="onSubmit(character)" >{{ character.name }}</li>
-            </ul>
-          </div>
         </div>
       </div>
-    </form>
+
+      <div *ngIf="characterList.length" class="searchList">
+        <div>
+          <ul>
+            <li
+              *ngFor="let character of characterList"
+              (click)="onSubmit(character)" >{{ character.name }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
   </div>
 </nav>
