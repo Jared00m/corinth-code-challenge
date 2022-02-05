@@ -31,7 +31,6 @@ export class NavBarComponent implements OnInit {
       const response: SwapiPeopleResponse = await this.swapiService.search(name)
       if (response.query === this.query) {
         this.characterList = response.results;
-        this.searching = false;
       }
       this.searching = false;
     })
@@ -45,7 +44,6 @@ export class NavBarComponent implements OnInit {
       this.characterList = [];
       this.searching = false;
     }
-
   }
 
   async onSubmit(character: SwapiPerson) {
