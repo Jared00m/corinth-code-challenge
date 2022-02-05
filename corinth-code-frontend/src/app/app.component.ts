@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SwapiPeopleResponse } from './models/swapi/swapi-people-response';
 import { SwapiPerson } from './models/swapi/swapi-person';
 
 @Component({
@@ -9,8 +8,6 @@ import { SwapiPerson } from './models/swapi/swapi-person';
 })
 export class AppComponent {
 
-  notFound = false;
-  results: SwapiPerson[] = [];
   character: SwapiPerson = {
     name: '',
     mass: '',
@@ -32,6 +29,5 @@ export class AppComponent {
 
   onCharacterSelected(character: SwapiPerson) {
     this.character = character;
-    this.notFound = false;
   }
 }
