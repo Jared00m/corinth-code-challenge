@@ -11,7 +11,7 @@ const getPeople: RequestHandler = async (req: Request, res: Response, next: Next
         uri = uri + `?search=${search}`;
     }
 
-    let people: SwapiPerson[] = [];
+    const people: SwapiPerson[] = [];
     let isMore = true;
 
     while (isMore === true) {
@@ -48,7 +48,7 @@ const getPerson: RequestHandler = async (req: Request, res: Response, next: Next
 }
 
 const getFilm: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    let url = req.query.url;
+    const url = req.query.url;
     if(!url) {
         return res.status(200).send({ 'error': 'Must include URL query parameter' });
     }
@@ -63,7 +63,7 @@ const getFilm: RequestHandler = async (req: Request, res: Response, next: NextFu
 }
 
 const getStarship: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    let url = req.query.url;
+    const url = req.query.url;
     if(!url) {
         return res.status(200).send({ 'error': 'Must include URL query parameter' });
     }
@@ -78,7 +78,7 @@ const getStarship: RequestHandler = async (req: Request, res: Response, next: Ne
 }
 
 const getHomeworld: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    let url = req.query.url;
+    const url = req.query.url;
     if(!url) {
         return res.status(200).send({ 'error': 'Must include URL query parameter' });
     }
