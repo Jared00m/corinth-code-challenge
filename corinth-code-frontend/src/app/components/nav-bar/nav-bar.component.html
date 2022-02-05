@@ -3,31 +3,34 @@
     <a class="navbar-brand">Star Wars Search</a>
     <div class="search-container col-md-4 col float-end">
       <input
-      #searchInput
       [(ngModel)]="query"
-      (input)="onInput(searchInput.value)"
+      (input)="onInput(query)"
       [ngModelOptions]="{standalone: true}"
       class="form-control"
       type="text"
       placeholder="Enter a character's name..."
       aria-label="Search">
-
-      <div *ngIf="searching" class="search-waiting">
-        <div class="spinner-border search-waiting" role="status">
-          <span class="visually-hidden">Loading...</span>
+      <div
+        *ngIf="searching"
+        class="search-waiting">
+        <div
+          class="spinner-border search-waiting"
+          role="status">
+          <span
+            class="visually-hidden">Loading...
+          </span>
         </div>
       </div>
-
       <div *ngIf="characterList.length" class="searchList">
         <div>
           <ul>
             <li
               *ngFor="let character of characterList"
-              (click)="onSubmit(character)" >{{ character.name }}</li>
+              (click)="onSubmit(character)" >{{ character.name }}
+            </li>
           </ul>
         </div>
       </div>
     </div>
-
   </div>
 </nav>
